@@ -27,25 +27,25 @@ class SettingsScreen extends StatelessWidget {
             if (lang == 'Marathi') displayLabel = 'मराठी (Marathi)';
             if (lang == 'Hindi') displayLabel = 'हिंदी (Hindi)';
 
-            return RadioListTile<String>(
+            return ListTile(
+              leading: Icon(
+                isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
+                color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
+              ),
               title: Text(
                 displayLabel,
                 style: TextStyle(fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
               ),
-              value: lang,
-              groupValue: service.selectedLanguage,
-              onChanged: (val) {
-                if (val != null) {
-                  service.setLanguage(val);
-                  Navigator.pop(ctx);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Language changed to $val'),
-                      backgroundColor: Colors.green,
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
-                }
+              onTap: () {
+                service.setLanguage(lang);
+                Navigator.pop(ctx);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Language changed to $lang'),
+                    backgroundColor: Colors.green,
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
               },
             );
           }).toList(),

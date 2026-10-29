@@ -205,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           // Role Selector Dropdown Menu
           DropdownButtonFormField<String>(
-            value: _selectedRole,
+            initialValue: _selectedRole,
             decoration: InputDecoration(
               labelText: AppStrings.tr('select_role_portal', lang),
               prefixIcon: const Icon(Icons.person_pin_outlined),

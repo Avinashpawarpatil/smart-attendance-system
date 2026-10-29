@@ -295,7 +295,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DropdownButtonFormField<Course>(
-                            value: matchedCourse,
+                            initialValue: matchedCourse,
                             decoration: InputDecoration(
                               labelText: AppStrings.tr('select_course', lang),
                               border: const OutlineInputBorder(),

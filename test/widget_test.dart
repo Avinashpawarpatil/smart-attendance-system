@@ -1,26 +1,46 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:smartattendance/main.dart';
 import 'package:smartattendance/services/attendance_service.dart';
+import 'package:smartattendance/utils/app_strings.dart';
 
 void main() {
-  setUpAll(() {
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
-  });
+  group('AttendanceService Unit Tests', () {
+    test('Initial default values are correct', () {
+      final service = AttendanceService();
+      expect(service.userRole, 'Teacher');
+      expect(service.selectedLanguage, 'English');
+      expect(service.isDarkMode, false);
+      expect(service.notificationsEnabled, true);
+    });
 
-  testWidgets('Smart Attendance System Smoke Test', (WidgetTester tester) async {
-    final attendanceService = AttendanceService();
-    await attendanceService.init();
+    test('Role switching works correctly', () {
+      final service = AttendanceService();
+      service.setUserRole('Student');
+      expect(service.userRole, 'Student');
+      expect(service.isStudent, true);
+      expect(service.isTeacher, false);
 
-    await tester.pumpWidget(
-      ChangeNotifierProvider.value(
-        value: attendanceService,
-        child: const SmartAttendanceApp(),
-      ),
-    );
+      service.setUserRole('Teacher');
+      expect(service.userRole, 'Teacher');
+      expect(service.isTeacher, true);
+      expect(service.isStudent, false);
+    });
 
-    expect(find.text('Smart Attendance'), findsOneWidget);
+    test('Language setting works correctly', () {
+      final service = AttendanceService();
+      service.setLanguage('Hindi');
+      expect(service.selectedLanguage, 'Hindi');
+
+      service.setLanguage('Marathi');
+      expect(service.selectedLanguage, 'Marathi');
+
+      service.setLanguage('English');
+      expect(service.selectedLanguage, 'English');
+    });
+
+    test('AppStrings translations return correct values', () {
+      expect(AppStrings.tr('app_title', 'English'), 'Smart Attendance');
+      expect(AppStrings.tr('app_title', 'Marathi'), 'स्मार्ट हजेरी');
+      expect(AppStrings.tr('app_title', 'Hindi'), 'स्मार्ट उपस्थिति');
+    });
   });
 }

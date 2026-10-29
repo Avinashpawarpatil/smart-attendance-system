@@ -276,7 +276,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> with WidgetsBindingOb
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
+                  color: Colors.black.withValues(alpha: 0.7),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Text(
